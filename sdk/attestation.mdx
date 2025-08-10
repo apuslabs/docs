@@ -1,0 +1,138 @@
+---
+title: "Verifying Attestation"
+description: "Learn about NVIDIA Confidential Computing and how to verify attestations"
+---
+
+## What is NVIDIA Confidential Computing & Attestation?
+
+**NVIDIA Confidential Computing (CC)** creates a secure, isolated environment directly on the GPU. Think of it as a locked, tamper-proof "black box" where your AI model and data are processed. Nothing outside this box—not even the server's operating system—can see or interfere with what happens inside.
+
+**Attestation** is the proof that this "black box" is genuine. It's a digitally signed report from the GPU itself that cryptographically answers two key questions:
+
+1. **"Am I a real NVIDIA GPU?"** - It confirms the hardware is authentic and not an emulator.
+2. **"Is my environment secure?"** - It verifies that the GPU's firmware and drivers are up-to-date and haven't been tampered with.
+
+**Why does this matter for you?** Trust.
+
+With attestation, you don't have to blindly trust that we are running your AI on a real H100 GPU. You can **mathematically verify** it. This provides a level of on-chain verifiability and trust that is crucial for decentralized applications, especially those handling valuable or sensitive tasks.
+
+## How APUS Delivers Attestations
+
+You don't need to do anything extra to enable this powerful security feature. We've integrated the NVIDIA Attestation SDK directly into our HyperBEAM service nodes.
+
+**Every time you make an AI inference request, our service automatically generates a new attestation from the GPU that performed the computation.**
+
+This attestation is then attached to the response message we send back to your AO process. You'll find it in the `X-Attestation` tag.
+
+This means every single AI result you receive comes with a cryptographic proof of its origin and integrity, bringing true on-chain verifiability to AI.
+
+## How to Verify an Attestation
+
+### The Easy Way (Using the APUS Verifier Service)
+
+For your convenience, we have encapsulated the NVIDIA verification logic into a simple, dedicated service endpoint running on our HyperBEAM node. You can send the attestation data directly to this endpoint and get a simple "pass" or "fail" result.
+
+This is the recommended method for most use cases during the Hackathon.
+
+**Endpoint:**
+
+`http://72.46.85.207:8734/~cc@1.0/verify`
+
+**How to Use:**
+
+Simply make a `GET` request to the endpoint, passing the full attestation string you received as the request body.
+
+Here is a `curl` command example. Replace `YOUR_ATTESTATION_STRING_HERE` with the actual value from the `X-Attestation` tag.
+
+```bash
+curl --request GET \\
+  --url '<http://72.46.85.207:8734/~cc@1.0/verify>' \\
+  --header 'Content-Type: application/json' \\
+  --data 'YOUR_ATTESTATION_STRING_HERE'
+```
+
+**Response:**
+
+- **Successful Verification:** If the attestation is valid, the service will return true.
+- **Failed Verification:** If the attestation is invalid or tampered with, the service will return an error message.
+
+### The Advanced Way (Using the NVIDIA SDK)
+
+For developers who require full control over the verification process or wish to integrate it directly into their own trusted backend, you can verify the attestation token using NVIDIA's official Attestation SDK.
+
+This method is more complex as it requires setting up a Python environment and understanding the SDK's components.
+
+**Prerequisites:**
+
+1. **Python Environment:** You need `Python 3.8` or later.
+2. **NVIDIA Attestation SDK:** You must install the SDK from PyPI. It's recommended to do this in a virtual environment.
+    
+    ```bash
+    # Create and activate a virtual environment
+    python3 -m venv venv
+    source venv/bin/activate
+    
+    # Install the SDK
+    pip3 install nv-attestation-sdk
+    ```
+    
+**Verification Workflow:**
+
+The core steps to verify an attestation token on your own are:
+
+1. **Obtain the Attestation Token:** This is the full string from the `X-Attestation` tag in our service's response message.
+2. **Create a Policy File:** This is a JSON file that defines the specific claims you expect to see in a valid token. For example, you can enforce that the GPU driver version is correct or that secure boot is enabled. You can find an example policy file in the SDK documentation.
+3. **Use the SDK to Validate:** Write a Python script that uses the `nv_attestation_sdk` to validate the token against your policy file.
+
+**Example Python Script:**
+
+The following example demonstrates the core logic. It's based on the sample scripts provided in the NVIDIA SDK.
+
+```python
+#!/usr/bin/env python3
+from nv_attestation_sdk import attestation
+import json
+
+# 1. The attestation token you received from our service
+#    (This is a long string, shortened here for the example)
+attestation_token_str = 'YOUR_ATTESTATION_STRING_HERE'
+attestation_token = json.loads(attestation_token_str)
+
+# 2. The policy file defining the validation rules
+#    (NVGPURemotePolicyExample.json is provided by the SDK)
+policy_file_path = "path/to/your/NVGPURemotePolicyExample.json"
+with open(policy_file_path) as f:
+    policy = json.dumps(json.load(f))
+
+# 3. Use the SDK to perform validation
+try:
+    client = attestation.Attestation()
+
+    # The SDK's validate_token function expects the token in a specific format
+    # which it gets from its own get_token method after attesting.
+    # For external validation, you would manually reconstruct or pass the token.
+    # The simplest way is to manually check the claims within the decoded token.
+
+    # Let's decode the token to inspect its claims
+    decoded_claims = client.decode_token(attestation_token)
+    print("Decoded Claims:")
+    print(json.dumps(decoded_claims, indent=2))
+
+    # A manual check for the most important claim
+    if decoded_claims[1]['LOCAL_GPU_CLAIMS'][1].get('x-nvidia-overall-att-result') == True:
+        print("\\n[SUCCESS] Overall attestation result is TRUE.")
+    else:
+        print("\\n[FAILURE] Overall attestation result is not true or not found.")
+
+    # For a full programmatic validation, refer to the SDK's 'validate_token' usage
+    # in their provided examples like RemoteGPUTest.py
+
+except Exception as e:
+    print(f"An error occurred during verification: {e}")
+
+```
+
+**For a complete implementation and more details, we strongly recommend you consult the official NVIDIA Attestation SDK documentation** [https://github.com/NVIDIA/nvtrust/tree/main/guest_tools/attestation_sdk](https://github.com/NVIDIA/nvtrust/tree/main/guest_tools/attestation_sdk) **and its example scripts.** They provide the most accurate and up-to-date information.
+
+- **NVIDIA Attestation SDK on GitHub:** [Link to `nvtrust` GitHub repo]
+- **Sample Verification Scripts:** Refer to `RemoteGPUTest.py` and `LocalGPUTest.py` in the SDK's `tests` directory.

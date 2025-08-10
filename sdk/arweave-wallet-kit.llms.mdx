@@ -1,0 +1,343 @@
+---
+title: "Arweave Wallet Kit Documentation"
+description: "Hooks and Components for unified interaction with Arweave wallets"
+---
+
+# Introduction to Arweave Wallet Kit
+
+The Arweave Wallet Kit simplifies interactions between Arweave wallets and dApps, offering a unified API that supports any Arweave wallet. Users can easily interact with apps using their preferred wallet.
+
+The Kit is divided into multiple packages for modularity and extensibility:
+
+* A core package that is foundation for all functionality.
+* A set of React hooks and components built on the core package.
+* A styles package that complements the React hooks and components.
+
+Support for other frameworks can be developed using the core package.
+
+The support for various wallets is modular as well. It is broken down into "strategies", with each having its own package.
+
+## Terminology
+
+In Arweave Wallet Kit, a _strategy_ is an implementation of an Arweave wallet within the kit. These strategies allow the user to communicate with all wallets in a standard way and with a common API.
+
+## Supported wallets
+
+The library currently supports the following wallets:
+
+* [Wander.app](https://www.wander.app)
+* [Arweave.app](https://arweave.app)
+
+---
+
+## Setup
+
+As seen in the introduction, the Arweave Wallet Kit utility is distributed across a few packages for modularity. The three main packages for using Arweave Wallet Kit with React apps are `@arweave-wallet-kit/core`, `@arweave-wallet-kit/react`, `@arweave-wallet-kit/styles`. The `core` and `styles` package are peer dependencies for the `react` package.
+
+Alongside these, the strategies for each wallet have their own dedicated packages as well:
+
+* `@arweave-wallet-kit/wander-strategy`
+* `@arweave-wallet-kit/browser-wallet-strategy`
+* `@arweave-wallet-kit/othent-strategy`
+* `@arweave-wallet-kit/webwallet-strategy`
+
+> **Note**: Othent will be deprecated by the end of 2025. If you are integrating Arweave Wallet Kit into your dApp, it is recommended that you do NOT include the Othent strategy.
+>
+> For an Othent alternative, please check out Wander Connect: [https://wander.app/connect](https://wander.app/connect)
+
+You can configure one or more strategies depending on the wallets you wish to add support for.
+
+> **Note**: Currently, Arweave Wallet Kit works out of the box with ReactJS and Vite applications. Support for NextJS is in the works.
+
+## Installation
+
+We'll be demonstrating the installation and setup for all 4 strategies. The Wallet Kit can be installed with any of the popular package managers as follows:
+
+```sh
+npm install @arweave-wallet-kit/core @arweave-wallet-kit/react @arweave-wallet-kit/styles @arweave-wallet-kit/wander-strategy @arweave-wallet-kit/browser-wallet-strategy @arweave-wallet-kit/othent-strategy @arweave-wallet-kit/webwallet-strategy
+```
+
+or
+
+```sh
+yarn add @arweave-wallet-kit/core @arweave-wallet-kit/react @arweave-wallet-kit/styles @arweave-wallet-kit/wander-strategy @arweave-wallet-kit/browser-wallet-strategy @arweave-wallet-kit/othent-strategy @arweave-wallet-kit/webwallet-strategy
+```
+
+or
+
+```sh
+pnpm add @arweave-wallet-kit/core @arweave-wallet-kit/react @arweave-wallet-kit/styles @arweave-wallet-kit/wander-strategy @arweave-wallet-kit/browser-wallet-strategy @arweave-wallet-kit/othent-strategy @arweave-wallet-kit/webwallet-strategy
+```
+
+or
+
+```sh
+bun install @arweave-wallet-kit/core @arweave-wallet-kit/react @arweave-wallet-kit/styles @arweave-wallet-kit/wander-strategy @arweave-wallet-kit/browser-wallet-strategy @arweave-wallet-kit/othent-strategy @arweave-wallet-kit/webwallet-strategy
+```
+
+## Setting Up the Provider
+
+To use the library, you need to wrap your application with the Kit Provider. We'll be using a React Vite app as an example.
+
+```tsx
+// main.tsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.tsx";
+import "./index.css";
+import { ArweaveWalletKit } from "@arweave-wallet-kit/react";
+import WanderStrategy from "@arweave-wallet-kit/wander-strategy";
+import OthentStrategy from "@arweave-wallet-kit/othent-strategy";
+import BrowserWalletStrategy from "@arweave-wallet-kit/browser-wallet-strategy";
+import WebWalletStrategy from "@arweave-wallet-kit/webwallet-strategy";
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <ArweaveWalletKit
+      config={{
+        permissions: [
+          "ACCESS_ADDRESS",
+          "ACCESS_PUBLIC_KEY",
+          "SIGN_TRANSACTION",
+          "DISPATCH",
+        ],
+        ensurePermissions: true,
+        strategies: [
+          new WanderStrategy(),
+          new OthentStrategy(),
+          new BrowserWalletStrategy(),
+          new WebWalletStrategy(),
+        ],
+      }}
+    >
+      <App />
+    </ArweaveWalletKit>
+  </React.StrictMode>
+);
+```
+
+In the example above, the application is wrapped with the Arweave Wallet Kit Provider, passing it a `config` object as parameter with the desired wallet strategies and permissions based on the application requirements.
+
+Once the provider is setup, you can either use the Wallet Kit's functionality through its custom components or hooks.
+
+---
+
+## Connect Button
+
+The `<ConnectButton>` component is a highly customizable button that supports the [ANS](https://ans.gg) protocol to display information about the connected wallet. It comes as part of the `@arweave-wallet-kit/react` package.
+
+### Usage
+
+You can import and use the component anywhere in your React application as follows:
+
+```tsx
+<ConnectButton
+  accent="rgb(255, 0, 0)"
+  profileModal={false}
+  showBalance={true}
+  ...
+/>
+```
+
+### Configuration
+
+You can configure the Connect Button through its props:
+
+| Props                | Type      | Description                                                                             |
+| -------------------- | --------- | --------------------------------------------------------------------------------------- |
+| `accent`             | `string`  | A theme color for the button                                                            |
+| `showBalance`        | `boolean` | Show user balance when connected                                                        |
+| `showProfilePicture` | `boolean` | Show user profile picture when connected                                                |
+| `useAns`             | `boolean` | Use ANS to grab profile information                                                     |
+| `profileModal`       | `boolean` | Show profile modal on click (if disabled, clicking the button will disconnect the user) |
+
+---
+
+## Hooks
+
+Inside the `<ArweaveWalletKit>` provider, you can use all kinds of hooks that are reactive to the different strategies. Some of the hooks and/or api functions might not be supported by all wallets.
+
+### `useConnection`
+
+This is the core hook for connecting / disconnecting a strategy.
+
+To use the different functionalities the various Arweave wallets provide, you need to request permissions from the user to interact with their wallets. This can be done with the `connect()` function.
+
+To end the current Wander session for the user, you can disconnect from the extension, using the `disconnect()` function. This removes all permissions from your application.
+
+The `connected` function is simply a boolean for checking whether the user is connected with the application.
+
+#### Usage
+
+```ts
+const { connected, connect, disconnect } = useConnection();
+
+// initiate connection
+await connect();
+
+// disconnect the connected strategy
+await disconnect();
+
+// is there a strategy connected?
+connected ? "wallet connected" : "no connected wallet";
+```
+
+### `useApi`
+
+The API hook returns the active strategy's API as an intractable object. Can be used to sign/encrypt, etc.
+
+#### Usage
+
+```ts
+const api = useApi();
+
+// sign
+await api.sign(transaction);
+
+// encrypt
+await api.encrypt(...)
+```
+
+> **Warning**: The available API functions may vary depending on the chosen strategy.
+
+### `useProfileModal`
+
+Toggle visibility (display/ hide) a modal with the connected user's profile information and a disconnect button.
+
+```ts
+const profileModal = useProfileModal();
+
+profileModal.setOpen(true);
+```
+
+### `useActiveAddress`
+
+The Active address hook returns the address that is currently connected with the application. It requires the [`ACCESS_ADDRESS`](https://docs.wander.app/api/connect#permissions) and the [`ACCESS_ALL_ADDRESSES`](https://docs.wander.app/api/connect#permissions) permission.
+
+#### Usage
+
+```ts
+const address = useActiveAddress();
+```
+
+### `usePublicKey`
+
+The Active address hook returns the public key that is currently connected with the application. It requires the [`ACCESS_PUBLIC_KEY`](https://docs.wander.app/api/connect#permissions) permission.
+
+#### Usage
+
+```ts
+const publicKey = usePublicKey();
+```
+
+### `usePermissions`
+
+The Permissions hook returns the permissions given to the application by the connected user.
+
+#### Usage
+
+```ts
+const permissions = usePermissions();
+```
+
+### `useAddresses`
+
+This hook returns all the addresses in the connected wallet, known by Arweave Wallet Kit. This is useful for fetching all the addresses a connected user may have. It requires the [`ACCESS_ALL_ADDRESSES`](https://docs.wander.app/api/connect#permissions) permission.
+
+#### Usage
+
+```ts
+const addresses = useAddresses();
+```
+
+### `useWalletNames`
+
+This hook returns any names associated with all the addresses the connected user may have. An example of these names are ANS names that can be associated with any Arweave wallet addresses. It requires the [`ACCESS_ALL_ADDRESSES`](https://docs.wander.app/api/connect#permissions) permission.
+
+#### Usage
+
+```ts
+const walletNames = useWalletNames();
+```
+
+### `useStrategy`
+
+Active strategy hook. Returns the currently used strategy's ID ([`"wander"`](https://www.wander.app/), [`"webwallet"`](https://arweave.app), etc.)
+
+#### Usage
+
+```ts
+const strategy = useStrategy();
+```
+
+---
+
+## Customization
+
+### Manage customizations
+
+Custom configuration can be applied using the Wallet Kit Provider:
+
+```tsx
+...
+   <ArweaveWalletKit
+      theme={{
+        displayTheme: "light",
+        accent: {
+          r: 0,
+          g: 0,
+          b: 0
+        },
+        titleHighlight: {
+          r: 0,
+          g: 122,
+          b: 255
+        },
+        radius: "default"
+      }}
+      config={{
+        strategies: [
+          new WanderStrategy(),
+          new WebWalletStrategy(),
+          new OthentStrategy(),
+          new BrowserWalletStrategy()
+        ],
+        permissions: ["ACCESS_ADDRESS", "ACCESS_ALL_ADDRESSES"],
+        ensurePermissions: true,
+        appInfo: {
+          name: "Test App",
+          logo: "https://arweave.net/tQUcL4wlNj_NED2VjUGUhfCTJ6pDN9P0e3CbnHo3vUE"
+        },
+        gatewayConfig: {
+          host: "arweave.net",
+          port: 443,
+          protocol: "https"
+        }
+      }}
+    >
+    <YourApp />
+  </ArweaveWalletKit>
+...
+```
+
+### Application info
+
+Using the `config` field of the `<ArweaveWalletKit>` provider component, you can define a name, a logo or the required permissions for your app. The following options are available:
+
+| Prop                | Type                                                                                | Default             | Description                                                                                                |
+| ------------------- | ----------------------------------------------------------------------------------- | ------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `permissions`       | [`PermissionType[]`](https://docs.wander.app/api/connect#permissions)               | `[]`                | Permissions to connect with.                                                                               |
+| `ensurePermissions` | `boolean`                                                                           | `false`             | Ensure that all required permissions are present. If false, it only checks if the app has any permissions. |
+| `appInfo`           | [`AppInfo`](https://docs.wander.app/api/connect#additional-application-information) | `{}`                | Information about your app (name/logo).                                                                    |
+| `gatewayConfig`     | [`GatewayConfig`](https://docs.wander.app/api/connect#custom-gateway-config)        | arweave.net gateway | Configuration for the Arweave gateway to use.                                                              |
+
+### Theming
+
+With the `theme` field, you can define a custom theme configuration for the Arweave Wallet Kit modals and buttons. The following options are available:
+
+| Prop             | Type                               | Description                                                            |
+| ---------------- | ---------------------------------- | ---------------------------------------------------------------------- |
+| `displayTheme`   | `"dark"`, `"light"`                | UI display theme to use                                                |
+| `accent`         | `RGBObject`                        | RGB accent color for the UI                                            |
+| `titleHighlight` | `RGBObject`                        | RGB accent color for the subscreen titles (like the connection screen) |
+| `radius`         | `"default"`, `"minimal"`, `"none"` | Border radius level used throughout the Kit UI                         |

@@ -1,0 +1,117 @@
+---
+title: "Hackathon Developer Guide"
+description: "Introduction to the APUS AI Inference Service for the AO Hackathon"
+---
+
+## Introduction
+
+Hello builders, and welcome to the AO Hackathon!
+
+At APUS, our mission is to enable verifiable decentralized AI of the AO ecosystem by integrating deterministic GPU computing. We believe that by providing direct, on-chain access to accelerated computing, we unlock the next generation of autonomous agents—making them more intelligent, capable, and powerful than ever before.
+
+For this hackathon, we are thrilled to introduce our flagship product: the **APUS AI Inference Service**. This service gives your AO processes the ability to call a large language model and receive a response, all through a simple, on-chain message. Inspired by the simplicity and elegance of community projects like `llama-herder` [https://github.com/permaweb/llama-herder](https://github.com/permaweb/llama-herder), our service is designed to be incredibly easy to use, so you can focus on building amazing things.
+
+This guide will walk you through everything from making your first AI call to integrating our service into a full-stack dApp. Let's get started!
+
+## Quick Start In 5 Minutes
+
+1. **Install aos**
+    
+    ```jsx
+    npm i -g https://preview_ao.arweave.net
+    ```
+    
+2. **Spawn your process & trust APUS HyperBEAM Node**
+    1. Open your terminal
+    2. Spawn your process: 
+        
+        ```jsx
+        aos my_process
+        ```
+        
+    3. Trust apus node operator: 
+        
+        ```jsx
+        ao.authorities[2] = "lpJ5Edz_8DbNnVDL0XdbsY9vCOs45NACzfI4jvo4Ba8"
+        ```
+        
+3. Install APM & APUS Lua Lib
+    1. Install APM: 
+        
+        ```jsx
+        .load-blueprint apm
+        ```
+        
+    2. Wait for APM Loaded (about 2 minutes)
+        
+        ![image.png](/sdk/images/image.png)
+        
+        *Note: Please wait for the `APM client loaded` logs to load. If it do not appear after a long time, try entering any command in the AOS console to check if the system is stuck.*
+        
+    3. Install Lua Lib: 
+        
+        ```jsx
+        apm.install "ai-lib-beta"
+        ```
+        
+    4. Wait for Lua Lib Installed
+        
+        ![image.png](/sdk/images/image1.png)
+        
+        *Note: Download may take a while. Please wait.*
+        
+4. Get your credits
+    1. You have 5 default test credits, allowing up to 5 inference calls.
+    2. Apply more credits:(Recommend)
+        1. Join APUS Discord: [LINK_TO_DISCORD_HERE]
+        2. Go to the `#📥｜apply-hackathon-incentive` channel.
+        3. Submit Your Application :
+            
+            **🧪 Sample Application Format**
+            
+            ```jsx
+            Project Name: MyChatAgent
+            Description: A Chat AI Agent built using the APUS SDK
+            GitHub Repo: <https://github.com/xxx/xxx>
+            Twitter Handle:xxxx
+            Process ID: process_3rrphxxxxxx
+            Wallet Address: abc123…
+            Application Type: Plan A (Free Credits) / Plan B (Token Rebate)
+            ```
+            
+5. Reconnect your process to APUS HyperBEAM Node & Run AI Inference
+    1. Reconnect your process to APUS HyperBEAM Node
+        
+        `aos my_process --mainnet http://72.46.85.207:8734`
+        
+    2. Load AI Lib
+        
+        ```lua
+        ApusAI = require('ai-lib-beta')
+        ```
+        
+    3. Set `ApusAI_Debug` to enable inference result logging. If unset, no logs will be shown. 
+        
+        ```jsx
+        ApusAI_Debug = true
+        ```
+        
+    
+    Check your balance
+    
+    > **Default balance: 5,000,000,000,000 units (equals 5 credits for 5 inference calls). Credits are non-transferable.**
+    > 
+    
+    ```lua
+    ApusAI.getBalance()
+    ```
+    
+    1. Run AI Inference: *it takes about 50s*
+        
+        ```lua
+        ApusAI.infer("What is theAOComputer?")
+        ```
+        
+    2. Wait for AI Response
+        
+        ![image.png](/sdk/images/image2.png)

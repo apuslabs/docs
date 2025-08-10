@@ -1,68 +1,49 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "APUS Network",
   "colors": {
-    "primary": "#16A34A",
+    "primary": "#091dff",
     "light": "#07C983",
-    "dark": "#15803D"
+    "dark": "#091dff"
   },
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Overview",
         "groups": [
           {
-            "group": "Getting started",
+            "group": "Introduction",
             "pages": [
               "index",
-              "quickstart",
-              "development"
-            ]
-          },
-          {
-            "group": "Customization",
-            "pages": [
-              "essentials/settings",
-              "essentials/navigation"
-            ]
-          },
-          {
-            "group": "Writing content",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
-            "group": "AI tools",
-            "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "overview/vision"
             ]
           }
         ]
       },
       {
-        "tab": "API reference",
+        "tab": "AI Inference Service",
         "groups": [
           {
-            "group": "API documentation",
+            "group": "Getting Started",
             "pages": [
-              "api-reference/introduction"
+              "sdk/introduction",
+              "sdk/core-concepts"
             ]
           },
           {
-            "group": "Endpoint examples",
+            "group": "Using the Library",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "sdk/lua-library"
+            ]
+          },
+          {
+            "group": "Advanced Usage",
+            "pages": [
+              "sdk/api-reference",
+              "sdk/dapp-integration",
+              "sdk/attestation"
             ]
           }
         ]
@@ -71,19 +52,19 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
+          "anchor": "Discord",
+          "href": "https://discord.gg/NVqpWB2m8k",
+          "icon": "discord"
         },
         {
-          "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
+          "anchor": "Twitter",
+          "href": "https://twitter.com/intent/follow?screen_name=apus_network",
+          "icon": "twitter"
         },
         {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "anchor": "GitHub",
+          "href": "https://github.com/apuslabs",
+          "icon": "github"
         }
       ]
     }
@@ -96,13 +77,13 @@
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "https://discord.gg/AUPF2hv98C"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "label": "Join Hackathon",
+      "href": "https://permahub.ar.io/#/hackathon"
     }
   },
   "contextual": {
@@ -119,9 +100,9 @@
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "x": "https://x.com/apus_network",
+      "github": "https://github.com/apusnetwork",
+      "discord": "https://discord.gg/apusnetwork"
     }
   }
 }
