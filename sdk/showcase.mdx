@@ -1,0 +1,180 @@
+---
+title: "Showcase: APUS Chat Attestation Example"
+description: "Complete project showcase and developer guide for building AI applications with APUS"
+---
+
+# 🚀 Showcase: APUS Chat Attestation Example
+
+Congratulations! You have successfully run your first AI inference call. Now, let's demonstrate how to build a real AI chat application through a complete project example.
+
+## 📋 Project Overview
+
+**APUS Chat Attestation Example** is a complete full-stack application example that demonstrates how to:
+- Deploy AI chat agents on the AO network
+- Integrate APUS AI inference services
+- Build frontend interfaces to interact with AO agents
+- Implement message attestation and verification mechanisms
+
+**Project URL**: [https://github.com/apuslabs/apus-chat-attestation-example](https://github.com/apuslabs/apus-chat-attestation-example)
+
+## 🏗️ Project Architecture
+
+```
+apus-chat-attestation-example/
+├── ao_agent.lua          # AI chat agent on AO network
+├── frontend/             # Frontend application
+│   ├── src/
+│   │   ├── components/   # React components
+│   │   ├── hooks/        # Custom hooks
+│   │   └── utils/        # Utility functions
+│   └── package.json
+└── README.md
+```
+
+## 🔧 Core Components Analysis
+
+### 1. AO Agent (`ao_agent.lua`)
+This is a smart contract deployed on the AO network, responsible for:
+- Receiving user messages
+- Calling APUS AI inference services
+- Generating AI responses
+- Handling message attestation
+
+**Key Features**:
+- Uses APUS AI library for inference
+- Implements message queue management
+- Supports message attestation and verification
+- Error handling and retry mechanisms
+
+### 2. Frontend Application
+User interface built with React, providing:
+- Chat interface
+- AO Connect integration
+- Message sending and receiving
+- Real-time status updates
+
+## 🎯 Developer Learning Guide
+
+### Phase 1: Understanding AO Agent Architecture
+
+**Learning Objective**: Master the basic structure of AO Agent and APUS AI integration methods
+
+**Key Code Snippets**:
+```lua
+-- Load APUS AI library
+ApusAI = require('ai-lib-beta')
+
+-- Core logic for handling messages
+Handlers.message = function(msg)
+    -- 1. Validate message format
+    -- 2. Call AI inference
+    -- 3. Generate response
+    -- 4. Send response
+end
+```
+
+**Learning Points**:
+1. **Message Processing Flow**: Understand how AO Agent receives, processes, and responds to messages
+2. **AI Integration Pattern**: Learn how to elegantly integrate APUS AI services
+3. **State Management**: Master AO Agent's state management mechanisms
+4. **Error Handling**: Understand error handling and retry strategies
+
+### Phase 2: Frontend Integration Patterns
+
+**Learning Objective**: Master how frontend interacts with AO Agent
+
+**Key Concepts**:
+1. **AO Connect**: Learn how to connect to AO network
+2. **Message Sending**: Learn how to send messages to AO Agent
+3. **Response Handling**: Master how to handle AI responses
+4. **State Synchronization**: Understand frontend state synchronization with AO Agent
+
+### Phase 3: Project Customization Development
+
+**Development Steps**:
+
+1. **Project Initialization**
+   ```bash
+   # Clone example project
+   git clone https://github.com/apuslabs/apus-chat-attestation-example
+   cd apus-chat-attestation-example
+   
+   # Install dependencies
+   npm install
+   ```
+
+2. **AO Agent Customization**
+   - Modify business logic in `ao_agent.lua`
+   - Adjust AI prompts and parameters
+   - Add custom functionality modules
+
+3. **Frontend Interface Customization**
+   - Modify UI components and styles
+   - Add new interactive features
+   - Integrate other services or APIs
+
+4. **Testing and Deployment**
+   - Local testing of AO Agent
+   - Deploy to AO network
+   - Frontend deployment and configuration
+
+## 💡 Development Tips and Suggestions
+
+### Using Cursor for Development
+
+If you're using Cursor for development, you can fully leverage the AI assistant:
+
+1. **Code Learning Mode**
+   ```
+   Prompt: "Please analyze this AO Agent code and explain its architecture and key functions"
+   ```
+   - Let AI learn the code structure of `ao_agent.lua`
+   - Understand APUS AI integration patterns
+   - Master AO Agent best practices
+
+2. **Frontend Code Migration**
+   ```
+   Prompt: "Please analyze this frontend code and explain how to call AO Agent"
+   ```
+   - Let AI learn frontend interaction patterns with AO Agent
+   - Understand AO Connect usage methods
+   - Master state management and error handling
+
+3. **Project Customization Guidance**
+   ```
+   Prompt: "Based on this example, help me design a [Your Project Type]"
+   ```
+   - Let AI customize new features based on the example project
+   - Provide code refactoring suggestions
+   - Optimize performance and user experience
+
+### Development Best Practices
+
+1. **Modular Design**
+   - Modularize AO Agent functionality
+   - Use clear function naming and comments
+   - Implement reusable components
+
+2. **Error Handling**
+   - Implement comprehensive error handling mechanisms
+   - Add logging functionality
+   - Provide user-friendly error messages
+
+3. **Performance Optimization**
+   - Optimize AI call frequency
+   - Implement message caching mechanisms
+   - Reduce unnecessary network requests
+
+4. **User Experience**
+   - Add loading state indicators
+   - Implement real-time message updates
+   - Provide responsive design
+
+## 🎉 Next Steps
+
+1. **Explore Example Project**: Carefully read and understand the example code
+2. **Local Testing**: Run and test the project in local environment
+3. **Custom Development**: Develop your own AI applications based on the example
+4. **Community Engagement**: Join APUS Discord for support and feedback
+
+Now you have the foundational knowledge to build AI applications - it's time to start your creative journey! 🚀 

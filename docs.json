@@ -29,6 +29,7 @@
             "group": "Getting Started",
             "pages": [
               "sdk/introduction",
+              "sdk/showcase",
               "sdk/core-concepts"
             ]
           },
