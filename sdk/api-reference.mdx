@@ -21,7 +21,7 @@ To purchase Credits, you perform a standard `Transfer` to the `$APUS` token proc
 | Tag | Type | Required | Description |
 | --- | --- | --- | --- |
 | `Action` | string | Yes | Must be `"Transfer"`. |
-| `Recipient` | string | Yes | The `AI-Infer Router Process ID`: `QwaPu_yGGKtzfRQ9EDdkPulLrCGOIpbIqc40PvFq6YU`. |
+| `Recipient` | string | Yes | The `AI-Infer Router Process ID`: `D0na6AspYVzZnZNa7lQHnBt_J92EldK_oFtEPLjIexo`. |
 | `Quantity` | string | Yes | The amount of `$APUS` tokens to transfer. The credits you receive will be based on the current exchange rate. |
 | `X-Reason` | string | Yes | Must be `Buy-Credits` to indicate the purpose of the transfer. |
 
@@ -30,7 +30,7 @@ To purchase Credits, you perform a standard `Transfer` to the `$APUS` token proc
 ```lua
 ao.send({
     Target = "AgDV_J8GcSIb6NSJKPjg48aX-7FoebesFQAaWSTpwyo", -- $APUS Token Process
-    Recipient = "9I9F1IHS94oUABzKclMW8f2oj7_6_X9zGA_fnMZ_AzY", -- Our Router Process
+    Recipient = "D0na6AspYVzZnZNa7lQHnBt_J92EldK_oFtEPLjIexo", -- Our Router Process
     Action = "Transfer",
     Quantity = "1000000000000", -- e.g., 1 $APUS (10^12 Armstrongs)
     ["X-Reason"] = "Buy-Credits"
@@ -48,7 +48,7 @@ ao.send({
 
 To initiate an AI inference, send a message directly to our Router Process.
 
-- **Target:** `QwaPu_yGGKtzfRQ9EDdkPulLrCGOIpbIqc40PvFq6YU` (AI-Infer Router Process ID)
+- **Target:** `D0na6AspYVzZnZNa7lQHnBt_J92EldK_oFtEPLjIexo` (AI-Infer Router Process ID)
 - **Action:** `Infer`
 
 **Request Message Tags:**
@@ -75,7 +75,7 @@ These parameters allow you to control the behavior of the `Gemma3-27B` model for
 
 ```lua
 ao.send({
-    Target = "9I9F1IHS94oUABzKclMW8f2oj7_6_X9zGA_fnMZ_AzY",
+    Target = "D0na6AspYVzZnZNa7lQHnBt_J92EldK_oFtEPLjIexo",
     Action = "Infer",
     ["X-Prompt"] = "Who are you?",
     ["X-Options"] = '{"temperature": 0.8, "max_tokens": 150}'
@@ -142,7 +142,7 @@ On Error
 Our Router Process uses HyperBEAM's `patch@1.0` device to expose its internal state for efficient, read-only access over HTTP. This is the best way to monitor your tasks and credits without sending messages.
 
 - **Base URL:** `http://72.46.85.207:8734/{Router_Process_ID}~process@1.0/now/cache/`
-- **Router Process ID:** `9I9F1IHS94oUABzKclMW8f2oj7_6_X9zGA_fnMZ_AzY`
+- **Router Process ID:** `D0na6AspYVzZnZNa7lQHnBt_J92EldK_oFtEPLjIexo`
 
 **Available Cache Endpoints:**
 
