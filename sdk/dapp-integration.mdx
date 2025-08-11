@@ -7,7 +7,7 @@ description: "Learn how to integrate APUS AI Service into your full-stack dApp"
 
 To build a full-stack application that interacts with the APUS AI service, you'll typically have a JavaScript frontend that communicates with a dedicated AO process acting as your application's backend.
 
-This backend process is where you'll integrate our `apus-ai` library and manage your application's core logic. The diagram below illustrates this common architecture.
+This backend process is where you'll integrate our `@apus/ai` library and manage your application's core logic. The diagram below illustrates this common architecture.
 
 ```mermaid
 graph TD
@@ -420,7 +420,7 @@ Your backend process should follow this simple flow:
 Here's a simplified Lua script that implements this logic:
 
 ```lua
-local ApusAI = require('ai-lib-beta')
+local ApusAI = require('@apus/ai')
 
 -- 1. Handler to listen for prompts
 Handlers.add(

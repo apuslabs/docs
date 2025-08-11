@@ -51,7 +51,7 @@ This guide will walk you through everything from making your first AI call to in
     3. Install Lua Lib: 
         
         ```jsx
-        apm.install "ai-lib-beta"
+        apm.install "@apus/ai"
         ```
         
     4. Wait for Lua Lib Installed
@@ -81,13 +81,14 @@ This guide will walk you through everything from making your first AI call to in
             
 5. Reconnect your process to APUS HyperBEAM Node & Run AI Inference
     1. Reconnect your process to APUS HyperBEAM Node
-        
-        `aos my_process --mainnet http://72.46.85.207:8734`
+        ```jsx
+        aos my_process --mainnet http://72.46.85.207:8734
+        ```
         
     2. Load AI Lib
         
         ```lua
-        ApusAI = require('ai-lib-beta')
+        ApusAI = require('@apus/ai')
         ```
         
     3. Set `ApusAI_Debug` to enable inference result logging. If unset, no logs will be shown. 
@@ -109,7 +110,7 @@ This guide will walk you through everything from making your first AI call to in
     1. Run AI Inference: *it takes about 50s*
         
         ```lua
-        ApusAI.infer("What is theAOComputer?")
+        ApusAI.infer("What is Arweave?")
         ```
         
     2. Wait for AI Response

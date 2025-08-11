@@ -5,7 +5,7 @@ description: "Complete reference for interacting directly with the APUS AI Route
 
 ## Full API Reference (For Advanced Users)
 
-This section provides a detailed reference for interacting directly with the APUS AI Router Process. This is for advanced users who choose not to use the `apus-ai` library. All interactions are standard AO messages.
+This section provides a detailed reference for interacting directly with the APUS AI Router Process. This is for advanced users who choose not to use the `@apus/ai` library. All interactions are standard AO messages.
 
 ### Purchasing Credits with `$APUS`
 
@@ -15,7 +15,7 @@ This section provides a detailed reference for interacting directly with the APU
 
 To purchase Credits, you perform a standard `Transfer` to the `$APUS` token process, with the `Recipient` tag pointing to our Router Process.
 
-- **Target:** `AgDV_J8GcSIb6NSJKPjg48aX-7FoebesFQAaWSTpwyo` (APUS Token Process ID)
+- **Target:** `mqBYxpDsolZmJyBdTK8TJp_ftOuIUXVYcSQ8MYZdJg0` (APUS Token Process ID)
 - **Action:** `Transfer`
 
 | Tag | Type | Required | Description |
@@ -29,7 +29,7 @@ To purchase Credits, you perform a standard `Transfer` to the `$APUS` token proc
 
 ```lua
 ao.send({
-    Target = "AgDV_J8GcSIb6NSJKPjg48aX-7FoebesFQAaWSTpwyo", -- $APUS Token Process
+    Target = "mqBYxpDsolZmJyBdTK8TJp_ftOuIUXVYcSQ8MYZdJg0", -- $APUS Token Process
     Recipient = "D0na6AspYVzZnZNa7lQHnBt_J92EldK_oFtEPLjIexo", -- Our Router Process
     Action = "Transfer",
     Quantity = "1000000000000", -- e.g., 1 $APUS (10^12 Armstrongs)

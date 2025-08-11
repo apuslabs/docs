@@ -1,11 +1,11 @@
 ---
-title: "Using the apus-ai Lua Library"
+title: "Using the @apus/ai Lua Library"
 description: "Learn how to use the APUS AI Lua library for simplified AI inference"
 ---
 
 ## Quick Start: Your First Inference
 
-The easiest way to interact with the APUS AI service is by using our `apus-ai` Lua library. It handles all the complex messaging and payment details for you, so you can call the AI in a single line of code.
+The easiest way to interact with the APUS AI service is by using our `@apus/ai` Lua library. It handles all the complex messaging and payment details for you, so you can call the AI in a single line of code.
 
 ### Step 1: Get Credits
 
@@ -17,15 +17,15 @@ Before you start, you need Credits to pay for inference requests. During the AO 
 
 ### Step 2: Load the Library
 
-In your `aos` terminal, load the `apus-ai` library into your process. We recommend using a package manager like `apm`. If you don't have it, first run `.load-blueprint apm`.
+In your `aos` terminal, load the `@apus/ai` library into your process. We recommend using a package manager like `apm`. If you don't have it, first run `.load-blueprint apm`.
 
 ```lua
 -- Install the library using apm
 .load-blueprint apm
-apm.install("ai-lib-beta")
+apm.install("@apus/ai")
  
 -- Require the library in your code
-ApusAI = require('ai-lib-beta')
+ApusAI = require('@apus/ai')
 ```
 
 ### Step 3: Run Your First Prompt
@@ -38,9 +38,9 @@ ApusAI.infer("What is the weather?")
 
 After a few moments, you will see the AI's response printed in your terminal. Congratulations, you've just performed your first GPU-accelerated AI inference on AO!
 
-## Using the `apus-ai` Lua Library
+## Using the `@apus/ai` Lua Library
 
-While the Quick Start showed you the simplest way to get a response, the `apus-ai` library offers more control over the inference process through advanced options and callbacks.
+While the Quick Start showed you the simplest way to get a response, the `@apus/ai` library offers more control over the inference process through advanced options and callbacks.
 
 ## Setup
 
@@ -48,7 +48,7 @@ First, ensure the library is loaded in your `aos` process.
 
 ```lua
 APM.install("@apus/ai")
-ApusAI = require("apus-ai")
+ApusAI = require("@apus/ai")
 ```
 
 ## Core Functions
