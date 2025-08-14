@@ -47,7 +47,14 @@ This guide will walk you through everything from making your first AI call to in
         ![image.png](/sdk/images/image.png)
         
         *Note: Please wait for the `APM client loaded` logs to load. If it do not appear after a long time, try entering any command in the AOS console to check if the system is stuck.*
-        
+    <Expandable title="Advanced use when install apm failed or taking too long">
+    - ctrl+c quit aos console
+    - touch installer.lua
+    - copy https://github.com/betteridea-dev/ao-package-manager/blob/main/installer.lua into installer.lua
+    - aos new_process
+    - .load installer.lua
+    - now install apus sdk : apm.install "@apus/ai"
+    </Expandable>
     3. Install Lua Lib: 
         
         ```jsx
