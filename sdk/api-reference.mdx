@@ -30,7 +30,7 @@ To purchase Credits, you perform a standard `Transfer` to the `$APUS` token proc
 ```lua
 ao.send({
     Target = "mqBYxpDsolZmJyBdTK8TJp_ftOuIUXVYcSQ8MYZdJg0", -- $APUS Token Process
-    Recipient = "ZIc9924GI_wMzPayOZAgVjaxasNq1rIQwdSZseGoh7M", -- Our Router Process
+    Recipient = "Bf6JJR2tl2Wr38O2-H6VctqtduxHgKF-NzRB9HhTRzo", -- Our Router Process
     Action = "Transfer",
     Quantity = "1000000000000", -- e.g., 1 $APUS (10^12 Armstrongs)
     ["X-Reason"] = "Buy-Credits"
@@ -75,7 +75,7 @@ These parameters allow you to control the behavior of the `Gemma3-27B` model for
 
 ```lua
 ao.send({
-    Target = "ZIc9924GI_wMzPayOZAgVjaxasNq1rIQwdSZseGoh7M",
+    Target = "Bf6JJR2tl2Wr38O2-H6VctqtduxHgKF-NzRB9HhTRzo",
     Action = "Infer",
     ["X-Prompt"] = "Who are you?",
     ["X-Options"] = '{"temperature": 0.8, "max_tokens": 150}'
