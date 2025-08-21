@@ -18,31 +18,6 @@ Before you begin, please ensure you have the following set up:
     If you're new to `aos` or want a refresher, we highly recommend reading the official AO Cookbook guide on [connecting `aos` with HyperBEAM nodes](https://cookbook_ao.arweave.net/guides/migrating-to-hyperbeam/aos-with-hyperbeam.html).
     
 - **An Arweave Wallet:** You'll need a wallet (like ArConnect or Wander) to create your `aos` process. Your process ID is your identity on the network and is required to receive credits.
-- **Connecting to the APUS HyperBEAM Node (Crucial Step)**
-    
-    **This is the most important step to use our service.**
-    
-    Our AI Inference Service runs exclusively on our custom HyperBEAM node to provide GPU acceleration. You **must** connect your `aos` terminal to this specific node to interact with our service. If you try to send messages on the default legacynet, they will not be processed.
-    
-    1. **Open your terminal.**
-    2. **Spawn your process**: `aos my_process`
-    3. **Trust apus node operator**: `ao.authorities[2] = "lpJ5Edz_8DbNnVDL0XdbsY9vCOs45NACzfI4jvo4Ba8"`
-    4. **Install APM  :** `.load-blueprint apm`
-        
-        ![image.png](/sdk/images/image.png)
-        
-        *Note: Please wait for the `APM client loaded` logs to load. If it do not appear after a long time, try entering any command in the AOS console to check if the system is stuck.*
-        
-    5. **Install Lua Lib** : `apm.install "@apus/ai"`
-        
-        ![image.png](/sdk/images/image1.png)
-        
-        *Note: Download may take a while. Please wait.*
-        
-    6. **Exit aos console** with `ctrl + c` 
-    7. **Reconnect your process with APUS HyperBEAM Node**: `aos my_process --mainnet http://72.46.85.207:8734` 
-    
-    From this point on, all commands and code examples in this guide assume you are connected to our HyperBEAM node except additional notice.
     
 ### Key Concepts & Terminology
 
