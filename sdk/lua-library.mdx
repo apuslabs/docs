@@ -11,7 +11,7 @@ The easiest way to interact with the APUS AI service is by using our `@apus/ai` 
 
 Before you start, you need Credits to pay for inference requests. During the AO Hackathon, we are providing free credits to all participants.
 
-1. Join our Discord: [LINK_TO_DISCORD_HERE]
+1. Join our Discord: [https://discord.gg/r3aQcJRH5A]
 2. Go to the `#hackathon-credits` channel.
 3. Post your `aos` process ID to receive your free credits.
 
@@ -64,7 +64,7 @@ This is the primary function for sending an inference request. It's designed to 
 **Parameters:**
 
 - `prompt` (`string`): **Required.** The text prompt you want to send to the AI model.
-- `options` (`table`): **Optional.** A table of parameters to customize the inference request.
+- `options` (`table`): **Optional.** A json string of parameters to customize the inference request.
     - `session` (`string`): An existing session ID to continue a previous conversation. If a session ID is not provided, a new one will be created for the first turn.
     - `reference` (`string`): A custom unique ID for your request. If omitted, the library generates one automatically. This is useful for tracking your requests.
     - ...*(and any other runtime parameter like `temperature`, `max_tokens`, etc.)*
@@ -114,11 +114,7 @@ This is the primary function for sending an inference request. It's designed to 
     
     ```lua
     -- Assume `currentSessionId` was saved from a previous response
-    local options = {
-        session = currentSessionId,
-        temperature = 0.8,
-        max_tokens = 250
-    }
+    local options = [[{"max_tokens":512}]]
     
     ApusAI.infer("Tell me more about that.", options, function(err, res)
       if err then print(err.message) return end
