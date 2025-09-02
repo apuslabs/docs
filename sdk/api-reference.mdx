@@ -55,7 +55,8 @@ To initiate an AI inference, send a message directly to our Router Process.
 | Tag | Type | Required | Description |
 | --- | --- | --- | --- |
 | `Action` | string | Yes | Must be `"Infer"`. |
-| `X-Prompt` | string | Yes | The text prompt to send to the AI model. |
+| `Data` | string | Yes | The text prompt to send to the AI model. |
+| `X-Prompt` | string | No | **[Deprecated]** The text prompt to send to the AI model. |
 | `X-Reference` | string | No, but recommended! | A unique identifier for your request. If omitted, the message's own ID will be used. It's highly recommended for tracking responses. |
 | `X-Session` | string | No | An existing session ID to continue a conversation. If omitted, a new session is created. |
 | `X-Options` | json | No | A JSON string containing runtime parameters to customize the inference. See the table below for available options. |
@@ -77,7 +78,7 @@ ao.send({
     Target = "TED2PpCVx0KbkQtzEYBo0TRAO-HPJlpCMmUzch9ZL2g
 ",
     Action = "Infer",
-    ["X-Prompt"] = "Who are you?",
+    Data = "Who are you?",
     ["X-Options"] = '{"temperature": 0.8, "max_tokens": 150}'
 })
 ```
