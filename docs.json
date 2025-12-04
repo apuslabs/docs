@@ -9,44 +9,20 @@
   },
   "favicon": "/favicon.ico",
   "navigation": {
-    "tabs": [
+    "groups": [
       {
-        "tab": "Overview",
-        "groups": [
-          {
-            "group": "Introduction",
-            "pages": [
-              "index",
-              "overview/vision"
-            ]
-          }
+        "group": "Introduction",
+        "pages": [
+          "index",
+          "overview/vision"
         ]
       },
       {
-        "tab": "AI Inference Service",
-        "groups": [
-          {
-            "group": "Getting Started",
-            "pages": [
-              "sdk/introduction",
-              "sdk/showcase",
-              "sdk/core-concepts"
-            ]
-          },
-          {
-            "group": "Using the Library",
-            "pages": [
-              "sdk/lua-library"
-            ]
-          },
-          {
-            "group": "Advanced Usage",
-            "pages": [
-              "sdk/api-reference",
-              "sdk/dapp-integration",
-              "sdk/attestation"
-            ]
-          }
+        "group": "Inference Service",
+        "pages": [
+          "inference/introduction",
+          "inference/core-concepts",
+          "inference/attestation"
         ]
       }
     ],
