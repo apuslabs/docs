@@ -1,130 +1,77 @@
 ---
-title: "Hackathon Dev Guide — 5-Minute Quick Start"
-description: "Introduction to the APUS AI Inference Service for the AO Hackathon"
+title: "APUS AI Inference API "
+description: "A concise guide to building with the APUS AI Inference API on the AO Network"
 ---
 
 ## Introduction
 
-Hello builders, and welcome to the AO Hackathon!
+**APUS AI Inference** is an OpenAI-compatible API layer designed for **Deterministic**, **Confidential**, and **Verifiable** AI computation.
 
-At APUS, our mission is to enable verifiable decentralized AI of the AO ecosystem by integrating deterministic GPU computing. We believe that by providing direct, on-chain access to accelerated computing, we unlock the next generation of autonomous agents—making them more intelligent, capable, and powerful than ever before.
+It runs on the **Arweave AO decentralized compute network**, combining trusted execution with reproducible model outputs.
 
-For this hackathon, we are thrilled to introduce our flagship product: the **APUS AI Inference Service**. This service gives your AO processes the ability to call a large language model and receive a response, all through a simple, on-chain message. Inspired by the simplicity and elegance of community projects like `llama-herder` [https://github.com/permaweb/llama-herder](https://github.com/permaweb/llama-herder), our service is designed to be incredibly easy to use, so you can focus on building amazing things.
+---
 
-This guide will walk you through everything from making your first AI call to integrating our service into a full-stack dApp. Let's get started!
+## **Core Features**
 
-## Quick Start In 5 Minutes
+- **Deterministic** — Reproducible inference results across trusted nodes
+- **Confidential** — Secure model execution with data privacy guarantees
+- **Verifiable** — Transparent computation trace and on-chain attestations
+- **OpenAI-Compatible** — Works directly with the official openai SDK
 
-1. **Install aos**
-    
-    ```jsx
-    npm i -g https://preview_ao.arweave.net
-    ```
-    
-2. **Spawn your process & trust APUS HyperBEAM Node**
-    1. Open your terminal
-    2. Spawn your process: 
-        
-        ```jsx
-        aos my_process
-        ```
-        
-3. Install APM & APUS Lua Lib
-    1. Install APM: 
-        
-        ```jsx
-        .load-blueprint apm
-        ```
-        
-    2. Wait for APM Loaded (about 2 minutes)
-        
-        ![image.png](/sdk/images/image.png)
-        
-        *Note: Please wait for the `APM client loaded` logs to load. If it do not appear after a long time, try entering any command in the AOS console to check if the system is stuck.*
-    <Expandable title="Advanced use when install apm failed or taking too long">
-    - ctrl+c quit aos console
-    - touch installer.lua
-    - copy https://github.com/betteridea-dev/ao-package-manager/blob/main/installer.lua into installer.lua
-    ```jsx
-    Warning: do not use the previous process and do not use load-blueprint apm
-    ```
-    - aos new_process 
-    - .load installer.lua
-    - now install apus sdk : apm.install "@apus/ai"
-    </Expandable>
-    3. Install Lua Lib: 
-        
-        ```jsx
-        apm.install "@apus/ai"
-        ```
-        
-    4. Wait for Lua Lib Installed
-        
-        ![image.png](/sdk/images/image1.png)
-        
-        *Note: Download may take a while. Please wait.*
-        
-4. Get your credits
-    1. You have 5 default test credits, allowing up to 5 inference calls.
-    2. Apply more credits:(Recommend)
-        1. Join APUS Discord: <a href="https://discord.gg/r3aQcJRH5A" target="_blank">https://discord.gg/r3aQcJRH5A</a>
-        2. Go to the `#📥｜apus-hackathon-agent` channel.
-        3. Submit Your Application :
-            
-            **🧪 Sample Application Format**
-            
-            ```jsx
-            Project Name: MyChatAgent
-            Description: A Chat AI Agent built using the APUS SDK
-            GitHub Repo: <https://github.com/xxx/xxx>
-            Twitter Handle:xxxx
-            Process ID: process_3rrphxxxxxx
-            Wallet Address: abc123…
-            Application Type: Plan A (Free Credits) / Plan B (Token Rebate)
-            ```
-            
-5. Run AI Inference
-        
-    1. Load AI Lib
-        
-        ```lua
-        ApusAI = require('@apus/ai')
-        ```
-        
-    2. Set `ApusAI_Debug` to enable inference result logging. If unset, no logs will be shown. 
-        
-        ```jsx
-        ApusAI_Debug = true
-        ```
-        
-    
-    Check your balance
-    
-    > **Default balance: 5,000,000,000,000 units (equals 5 credits for 5 inference calls). Credits are non-transferable.**
-    > 
-    
-    ```lua
-    ApusAI.getBalance()
-    ```
-    
-    1. Run AI Inference: *it takes about 50s*
-        
-        ```lua
-        ApusAI.infer("What is Arweave?")
-        ```
-        
-    2. Wait for AI Response
-        
-        ![image.png](/sdk/images/image2.png)
+**Install the SDK**
 
-## 🚀 Next Step: View Complete Project Example
+```bash
+pip install openai
+```
 
-Congratulations! You have successfully run your first AI inference call. Now you can view our complete project example to learn how to build real AI applications:
+**nitialize the Client**
 
-**[📖 View Complete Project Example →](/sdk/showcase)**
+```bash
+from openai import OpenAI
 
-This example project will demonstrate:
-- How to deploy AI chat agents on the AO network
-- How to integrate APUS AI inference services
-- How to build frontend interfaces to interact with AO agents
-- Complete developer guides and best practices
+client = OpenAI(
+    api_key="",  # Not required during testing
+    base_url="https://hb.apus.network/~inference@1.0",
+)
+
+MODEL = "gpt-4o-mini"
+```
+
+**Single-turn Chat Example**
+
+```bash
+resp = client.chat.completions.create(
+    model=MODEL,
+    messages=[{"role": "user", "content": "What is 2 + 2?"}],
+)
+
+print(resp.choices[0].message.content)
+```
+
+**Multi-turn Conversation Example**
+
+```bash
+messages = [
+    {"role": "system", "content": "You are a math assistant."},
+    {"role": "user", "content": "What is 10 * 10?"},
+]
+
+resp = client.chat.completions.create(model=MODEL, messages=messages)
+print("Assistant:", resp.choices[0].message.content)
+
+# Continue the conversation
+messages += [
+    {"role": "assistant", "content": resp.choices[0].message.content},
+    {"role": "user", "content": "And what is 100 / 5?"},
+]
+
+resp2 = client.chat.completions.create(model=MODEL, messages=messages)
+print("Assistant:", resp2.choices[0].message.content)
+```
+
+## ** Notes**
+
+- No API key required during the **test phase**
+- Replace base_url with your custom endpoint
+- Fully compatible with openai.chat.completions.create()
+- Designed for **Deterministic**, **Confidential**, and **Verifiable** AI inference
