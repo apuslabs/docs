@@ -24,9 +24,9 @@ It runs on the **Arweave AO decentralized compute network**, combining trusted e
 pip install openai
 ```
 
-**nitialize the Client**
+**Initialize the Client**
 
-```bash
+```python
 from openai import OpenAI
 
 client = OpenAI(
@@ -34,12 +34,12 @@ client = OpenAI(
     base_url="https://hb.apus.network/~inference@1.0",
 )
 
-MODEL = "gpt-4o-mini"
+MODEL = "google/gemma-3-27b-it"
 ```
 
 **Single-turn Chat Example**
 
-```bash
+```python
 resp = client.chat.completions.create(
     model=MODEL,
     messages=[{"role": "user", "content": "What is 2 + 2?"}],
@@ -50,7 +50,7 @@ print(resp.choices[0].message.content)
 
 **Multi-turn Conversation Example**
 
-```bash
+```python
 messages = [
     {"role": "system", "content": "You are a math assistant."},
     {"role": "user", "content": "What is 10 * 10?"},
