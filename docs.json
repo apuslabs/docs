@@ -34,8 +34,8 @@
           "icon": "discord"
         },
         {
-          "anchor": "Twitter",
-          "href": "https://twitter.com/intent/follow?screen_name=apus_network",
+          "anchor": "X",
+          "href": "https://x.com/apus_network",
           "icon": "twitter"
         },
         {
@@ -51,17 +51,7 @@
     "dark": "/logo/dark.svg"
   },
   "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "https://discord.gg/AUPF2hv98C"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Join Hackathon",
-      "href": "https://permahub.ar.io/#/hackathon"
-    }
+    "links": []
   },
   "contextual": {
     "options": [
